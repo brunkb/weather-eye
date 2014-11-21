@@ -1,15 +1,37 @@
 <div class="jumbotron">
-   <h1><img src="images/eye.jpg" alt="Eye">Weather Eye</h1>
-  <div class="lead">
+   
+  
+  <div class="row">
+  
+    <div class="lead col-md-8">
+    <h1><img src="images/eye.jpg" alt="Eye">Weather Eye</h1>
       Weather Eye helps you plan your outdoor activities.<br/>
-  	  Today's date is <span>{{today | date:"MM/dd/yyyy"}}</span>  </div>
-</div>
+  	  Today's date is <span>{{today | date:"MM/dd/yyyy"}}</span>  
+  </div>
+  <div class="col-md-4 col-custom"><h4>Current Forecast for Minneapolis, MN:</h4>
+  <p>
+   <span ng-bind="hourlyForecast.condition"></span>
+   <span ng-bind="hourlyForecast.temp"></span>F
+   <img src="{{hourlyForecast.icon}}"/>
+  </p>
+  </div>
+  </div>
+  </div>
 
 <div class="row marketing">  
-  <h4>What day should I do something outdoors this week?</h4>
+  <h4>What day should I do something outdoors over the next 10 days?</h4>
   <!-- place holder for pulldown menu -->
-    Activities: <select ng-model="myActivity" ng-options="activity.name for activity in activities"></select><br/>
+    Activities: <select ng-change="onChange()" ng-model="myActivity" 
+    ng-options="activity.name for activity in activities"></select><br/>
+        
+    <div>The recommended temperature range for your selected Activity is: 
+    <span ng-bind="myActivity.tempRange[0]"></span>F up to 
+    <span ng-bind="myActivity.tempRange[1]"></span>F
+    <br/>
     
-    <div ng-bind="activityMap['run']['temp-min']"></div>
-    
+    <br/>
+    <div ng-bind="result"></div>
+    <ul>
+    	<li ng-repeat="day in bestDays">{{day}}</li>
+    </ul>
 </div>

@@ -8,28 +8,33 @@
  * Controller of the weatherEyeApp
  */
 angular.module('weatherEyeApp')
-  .controller('MainCtrl', function ($scope) {
+  .controller('MainCtrl', function ($scope, WeatherCalculator) {
   	 $scope.activities = [
-      {name:'run', value:'run'},
-      {name:'ski', value:'ski'},
-      {name:'swim', value:'swim'},
-      {name:'stay indoors and read', value:'stayin'},
-      {name:'play golf in a hail storm', value:'hailgolf'}
+      {name:'run', tempRange: [40,90]},
+      {name:'ski', tempRange: [-10,30]},
+      {name:'swim', tempRange: [68,90]},
+      {name:'ice fish', tempRange: [-20,30]}
     ];
+    
     $scope.myActivity = $scope.activities[1]; 
-   
-   	$scope.result = 'test';
-  
+ 
   	$scope.today = Date.now();
-  
+ 
+    $scope.hourlyForecast = WeatherCalculator.getForecastHourly();
+ 
+    $scope.onChange = function() {
+    	
+    	$scope.bestDays = WeatherCalculator.recommend($scope.myActivity.tempRange[0], 
+    	                 $scope.myActivity.tempRange[1]);
+    	console.log($scope.bestDays);
     
-    $scope.activityMap = { 
-    	run: { 'temp-min': '40', 'temp-max': '90', 'weather': 'clear' },
-    	ski: { 'temp-min': '-10', 'temp-max': '20', 'weather': 'clear'},
-    	swim: { 'temp-min': '68', 'temp-max': '90', 'weather': 'clear'},
-    	stayin: {'temp-min': '-30', 'temp-max': '90', 'weather': 'rain' },
-    	hailgolf: { 'temp-min': '40', 'temp-max': '90', 'weather': 'hail'}
+		if ($scope.bestDays.length == 0) {	
+            $scope.result = 'Based on our calculations, for at least the next ten days, there is no good day to ' + 
+            $scope.myActivity.name + ', sorry.';
+        }
+        else { 
+    		$scope.result = 'Based on our calculations, the best day(s) to ' + $scope.myActivity.name +
+    	 	' are:' 
+    	 }
     };
-    
-      
   });
