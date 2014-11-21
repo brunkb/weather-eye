@@ -2,10 +2,7 @@
 
 angular.module('weatherEyeApp').service('WeatherCalculator', function() {
       this.getForecastHourly = function() {
-      	   var d = new Date();
-      	   var hour = d.getHours();
-      
-           var currentHourForecast = hourlyForecastData.hourly_forecast[hour];
+           var currentHourForecast = hourlyForecastData.hourly_forecast[0];
            return { condition: currentHourForecast.condition,
                     temp: currentHourForecast.temp.english,
                     icon: currentHourForecast.icon_url
