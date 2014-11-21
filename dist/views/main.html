@@ -24,7 +24,7 @@
     Activities: <select ng-change="onChange()" ng-model="myActivity" 
     ng-options="activity.name for activity in activities"></select><br/>
         
-    <div>The recommended temperature range for your selected Activity is: 
+    <div ng-show="tempRange">The recommended temperature range for your selected Activity is: 
     <span ng-bind="myActivity.tempRange[0]"></span>F up to 
     <span ng-bind="myActivity.tempRange[1]"></span>F
     <br/>

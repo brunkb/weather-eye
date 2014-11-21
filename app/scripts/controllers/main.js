@@ -16,17 +16,17 @@ angular.module('weatherEyeApp')
       {name:'ice fish', tempRange: [-20,30]}
     ];
     
-    $scope.myActivity = $scope.activities[1]; 
- 
   	$scope.today = Date.now();
  
     $scope.hourlyForecast = WeatherCalculator.getForecastHourly();
+    
+    $scope.tempRange = false;
  
     $scope.onChange = function() {
     	
     	$scope.bestDays = WeatherCalculator.recommend($scope.myActivity.tempRange[0], 
     	                 $scope.myActivity.tempRange[1]);
-    	console.log($scope.bestDays);
+    	$scope.tempRange = true;
     
 		if ($scope.bestDays.length == 0) {	
             $scope.result = 'Based on our calculations, for at least the next ten days, there is no good day to ' + 
